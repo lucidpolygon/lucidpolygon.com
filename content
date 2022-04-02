@@ -1,0 +1,326 @@
+<section>
+  <p class="bg-red-200">
+      <strong>This tutorial is outdated. Many people have mentioned, it does not work
+      anymore. Please note, that there is no support for this.</strong>
+  </p>
+  <p>
+      This can be achieved with a small coding tweak. Shopify<strong><a href="https://themes.shopify.com/themes/debut/styles/default" target="_blank" rel="noreferrer noopener" >Debut</a></strong>theme comes with <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started"
+      >Ajax facility </a>already. This means, when you add an item to the cart, the page does not refresh or take you to the cart page as many other Shopify themes do.
+      Instead, the item gets added into the cart at the backend while you remain on the same page and you get a notification.
+  </p>
+  <h2>How to edit Shopify Debut theme code</h2>
+  <ul>
+      <li>Click the online store on the left sidebar of Shopify admin panel</li>
+      <li>Click on Themes</li>
+      <li>Click on Debut theme actions</li>
+      <li>Click on Edit Code</li>
+  </ul>
+  <p>
+      Now you will reach to the theme code section of Shopify. On the left sidebar
+      of the coding section find a file named <strong>product-card-grid.liquid</strong>. It can be found under the<strong>
+      Snippets</strong> section.
+  </p>
+  <h2>How to add an add-to-cart button to Shopify Debut theme collection pages?</h2>
+  <h2>Ajax code for adding an add-to-cart button to Shopify Debut theme</h2>
+  <p>
+      Add the following lines of code at the bottom of the page. This has been extracted and customised from the product page of the same theme to match with other theme settings. All you have to do is to copy these lines of codes and paste it at the bottom of the <strong>product-card-grid.liquid</strong> page.
+  </p>
+  <pre class="language-html">
+      <code>
+&lt;div id="ProductSection-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="product" data-enable-history-state="true" data-ajax-enabled="{{ settings.enable_ajax }}"&gt;
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{% form 'product', product, class:form_classes, novalidate: 'novalidate',
+data-product-form: '' %} 
+
+&lt;input type="hidden" name="id" value="{{ product.variants.first.id }}" /&gt;
+&lt;input min="1" type="hidden" id="quantity" name="quantity" value="1"/&gt;
+&lt;button type="submit" name="add"               
+aria-label="{{ 'products.product.add_to_cart' | t }}"
+class="btn product-form__cart-submit
+{% if section.settings.enable_payment_button %} 
+btn--secondary-accent{% endif %}"
+{% if settings.enable_ajax %}aria-haspopup="dialog"{% endif %}
+data-add-to-cart&gt;
+&lt;span data-add-to-cart-text&gt;
+{{ 'products.product.add_to_cart' | t }}
+&lt;/span&gt;
+&lt;span class="hide" data-loader&gt;
+{% include 'icon-spinner' %}
+&lt;/span&gt;
+&lt;/button&gt;
+{% endform %}
+&lt;/div&gt;
+{% unless product == empty %}
+&lt;script type="application/json" id="ProductJson-{{ section.id }}"&gt;
+{{ product | json }}
+&lt;/script&gt;
+&lt;script type="application/json" id="ModelJson-{{ section.id }}"&gt;
+{{ product.media | where: 'media_type', 'model' | json }}
+&lt;/script&gt;
+{% endunless %}
+</code></pre>
+<p>
+  This will add one qty of the default variant of the products that you have
+  just added. You can customise this code to make it look like how you would
+  want.
+</p>
+
+<h2>Customisation</h2>
+
+<p>
+  You can also customise it to display the product variants or display the qty
+  box. You have to tweak the CSS classes to change the looks of the button and
+  spacing.
+</p>
+</section>
+
+<!-- title -->
+Adding an Add to Cart Button to Collection Pages in Shopify Debut Theme Ajax
+<!-- slug -->
+adding-an-add-to-cart-button-to-collection-pages-in-debut-theme-ajax
+<!-- meta title -->
+Adding Add to Cart Button to Shopify Debut Theme Collection Pages Ajax
+<!-- meta description -->
+Shopify Debut theme comes with Ajax facility already. This means, when you add an item to the cart, the page does not refresh or take you to the cart page as many other Shopify themes do. Instead, the item gets added into the cart at the backend while you remain on the same page and you get a notification.
+<!-- created at -->
+
+-------------------------------------
+-------------------------------------
+-------------------------------------
+-------------------------------------
+-------------------------------------
+-------------------------------------
+
+
+<section>
+  <p><strong>This tutorial will teach you</strong></p>
+  <ul>
+      <li>
+          <strong>How to add the WhatsApp icon to your Shopify project</strong>
+          <strong>so your customers can click the icon and send a message to you by
+              WhatsApp</strong>
+      </li>
+      <li>
+          <strong>How to add a field in the settings of Shopify to update the WhatsApp
+              phone number
+          </strong>
+      </li>
+  </ul>
+  <blockquote>
+      <p>
+          <span>Disclaimer:
+                  This tutorial involves making edits to the theme file code. Please do
+                  this only if you have some experience in doing code edits. Also before
+                  starting to do this, make a duplicate of theme files in case if you
+                  have to restore them.</span>
+      </p>
+      <p>
+          <a href="https://help.shopify.com/en/manual/online-store/os/using-themes/managing-themes/duplicating-themes" target="_blank" rel="noreferrer noopener" title="How to Duplicate themes?">How to duplicate themes?</a>
+      </p>
+  </blockquote>
+  <h2>
+      Simple Method to add WhatsApp button to Shopify Manually &#8211; Hard Coding
+  </h2>
+  <ul>
+      <li>Go to <strong>Sales Channels on your left sidebar</strong></li>
+      <li>Click on <strong>Online Store</strong></li>
+      <li>Click on the <strong>Actions </strong>button on your selected theme</li>
+      <li>Click on the <strong>Edit Code</strong> option</li>
+  </ul>
+  <figure>
+      <img width="1024" height="366" src="storage/posts/shopify-edit-theme-screenshot-1024x366.jpg" alt="Shopify Edit Code" />
+  </figure>
+  <ul>
+      <li>
+          It will open your code editor. From the left side list of files scroll
+          down to the <strong>Assets</strong> section
+      </li>
+      <li>
+          Open your CSS file. Normally it will be
+          <code>theme.scss.liquid</code>. If you have a custom theme, find your
+          CSS file
+      </li>
+      <li>
+          Scroll all the way to the bottom and add the following code unit and save
+          the file.
+      </li>
+  </ul>
+  <pre>
+      <code class="language-css">
+/* Lucid Polygon WhatsApp Icon BEGIN  */
+.lp-whatsapp-icon-bar {
+position: fixed;
+top: 90%;
+-webkit-transform: translateY(-50%);
+-ms-transform: translateY(-50%);
+transform: translateY(-50%);
+z-index:99;
+}
+
+.lp-whatsapp-icon-bar a {
+display: block;
+text-align: center;
+transition: all 0.3s ease;
+}
+/* Lucid Polygon WhatsApp Icon END  */
+      </code>
+  </pre>
+  <h3><strong>Adding the code for Shopify Icon / Button</strong></h3>
+  <p>
+      Open any of the theme section. Preferably footer
+      (<strong>footer.liquid</strong>)and add the following code unit at the
+      beginning of the file pushing existing code down. This code unit will add
+      the icon. You can replace the 971000000000 number with your WhatsApp number.
+  </p>
+  <h3><strong>Points to note:</strong></h3>
+  <ul>
+      <li>Use international code with country code at the beginning.</li>
+      <li>
+          Do not add a + in the beginning. If your country code is +971 use only 971
+          without a plus
+      </li>
+  </ul>
+  <pre>
+      <code class="language-html">
+/* Lucid Polygon WhatsApp Icon BEGIN */
+&lt;div class="lp-whatsapp-icon-bar"&gt;
+&lt;a href="https://api.whatsapp.com/send?phone=971000000000&text=&#123;&#123;canonical_url&#125;&#125;%20I'm%20interested%20in%20this!"&gt;
+  &lt;img src="https://cdn.shopify.com/s/files/1/0102/3560/9184/files/whastapp-new-icon.png" width="150"&gt;
+&lt;/a&gt;
+&lt;/div&gt;
+/* Lucid Polygon WhatsApp Icon END */
+      </code>
+  </pre>
+  <p>Once the above code is added, save the file.</p>
+  <p>
+      Your Shopify is now equipped with an icon using which your customers can
+      contact you to send messages to the preferred WhatsApp number. You can now
+      preview the theme to find the WhatsApp icon.
+  </p>
+  <p>
+      In the future, if you have to edit the number, you have to come back to this
+      code and edit the number.
+  </p>
+  <h2>
+      Complete Method to add WhatsApp button to Shopify Manually &#8211; Hard
+      Coding
+  </h2>
+  <p>
+      Having to edit code every time you have to edit/update your WhatsApp number
+      is not a great practice. Instead, it would be better if we have a place in
+      the Shopify Settings to update the phone number without editing the code.
+      Isn&#8217;t it?
+  </p>
+  <h3>
+      <strong>Adding a Settings Option to Update WhatsApp phone number</strong>
+  </h3>
+  <ul>
+      <li>Scroll down to <code>Config </code>section of code editor</li>
+      <li>Open a file named <code>settings_schema.json</code></li>
+      <li>Scroll all the way down to the end</li>
+      <li>
+          The last line will be a closing square bracket &#8211;
+          <code>]</code>. Just before that will be a closing flower brack
+          &#8211; <code>}</code>
+      </li>
+  </ul>
+  <pre>
+      <code class="language-json">
+          }]
+      </code>
+  </pre>
+  <ul>
+      <li>
+          Add a comma after the flower bracket and copy-paste the following code
+      </li>
+  </ul>
+  <pre>
+      <code class="language-xml">  
+},
+{
+"name": "WhatsApp",
+"settings": &#91;
+{
+  "type": "text",
+  "id": "whatsapp_icon_number",
+  "label": "Whatsapp Number",
+  "default": "971000000000"
+},
+{
+  "type": "text",
+  "id": "whatsapp_icon_image",
+  "label": "Whatsapp Image Link",
+  "default": "https://cdn.shopify.com/s/files/1/0102/3560/9184/files/whastapp-new-icon.png"
+},
+{
+  "type": "text",
+  "id": "whatsapp_icon_text",
+  "label": "Whatsapp Text",
+  "default": "Hi, I am interested in this."
+}
+]
+}  
+]
+      </code>
+  </pre>
+  <ul>
+      <li>Save the file</li>
+      <li>
+          Now let us amend the icon code that we did earlier in the footer section
+      </li>
+      <li>Find that piece of code and replace it with the following code</li>
+  </ul>
+  <p>
+      As you can see we have now replace the hard coded sections with the
+      variables from settings.
+  </p>
+  <figure>
+      <img width="305" height="562" src="storage/posts/whatsapp.jpg" alt="Shopify Custom Setting" />
+  </figure>
+  <p>
+      Your Shopify is now equipped with an icon using which your customers can
+      contact you to send messages to the preferred WhatsApp number. And you have
+      the option in theme settings to change the WhatsApp phone number, the icon
+      image, and text anytime you wish.
+  </p>
+  <p>
+      You can now preview the theme to find the WhatsApp icon and go view the
+      theme settings to find the option.
+  </p>
+  <h2><strong>Lucid Polygon &#8211; Shopify Expert Dubai, UAE</strong></h2>
+  <p>
+      I am a Shopify Expert with experience in building many successful stores in
+      Dubai, UAE. I can set it up from the idea till launch including the payment
+      gateway.
+      <a href="https://lucidpolygon.com/shopify-uae/">Read more about my Shopify Service</a>.
+  </p>
+  </section>
+
+<!-- title -->
+Add WhatsApp button to Shopify Manually
+<!-- slug -->
+add-whatsapp-button-to-shopify-manually
+<!-- meta title -->
+Add WhatsApp button to Shopify Manually|Shopify WhatsApp App
+<!-- meta description -->
+This tutorial will teach you how to add the WhatsApp icon to your Shopify project so your customers can click the icon and send a message to you by WhatsApp. Also how to add a field in the settings of Shopify to update the WhatsApp phone number.
+<!-- created at -->
+
+
+-------------------------------------
+-------------------------------------
+-------------------------------------
+-------------------------------------
+-------------------------------------
+-------------------------------------
+
+
+<!-- title -->
+
+<!-- slug -->
+
+<!-- meta title -->
+
+<!-- meta description -->
+
+<!-- created at -->
