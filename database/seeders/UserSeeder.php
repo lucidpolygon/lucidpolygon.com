@@ -21,5 +21,16 @@ class UserSeeder extends Seeder
             'email' => 'thaha@lucidpolygon.com',
             'password' => Hash::make('password'),
         ]);
+        DB::table('posts')->insert([
+            'title' => 'Thaha',
+            'slug' => '/',
+            'content' => 'a',
+            'author_id' =>1,
+            'type' => 'page',
+            'status' => 'published',
+            'meta_title' => 'a',
+            'meta_description' => 'a',
+            'is_code' => 0
+        ]);
     }
 }
